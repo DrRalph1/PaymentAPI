@@ -17,7 +17,7 @@ class CreatePaymentTable extends Migration
             $table->increments('id')->startingValue(1);
             $table->integer('user_id');
             $table->integer('client_id');
-            $table->string('transaction_id');
+            $table->integer('transaction_id');
             $table->string('payment_type');
             $table->string('mode_of_payment');
             $table->float('amount');

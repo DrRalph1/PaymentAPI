@@ -18,9 +18,11 @@ class Arrears extends Model
      */
     protected $fillable = [
         'id',
+        'user_id',
         'client_id',
         'amount',
         'currency',
         'arrears_type', 
+        'status', 
     ];
 }

@@ -28,22 +28,30 @@ class ArrearsController extends Controller
        $user_id = @$input['user_id'];
 
        // Get Sale's ID
-       $sale_id = @$input['sale_id'];
+       $client_id = @$input['client_id'];
 
        // Get Payment ID
-       $payment_id = @$input['payment_id'];
+       $amount = @$input['amount'];
 
        // Get Mode of Refund
-       $mode_of_refund = @$input['mode_of_refund'];
+       $currency = @$input['currency'];
 
        // Get Status of Refund
-       $status = @$input['status'];       
+       $arrears_type = @$input['arrears_type'];      
+       
+       // Get Status of Refund
+       $status = @$input['status'];  
 
        // Authenticate the API KEY
        if ($api_key == env('APP_KEY')){
 
         // check if the user provided all the necessary information
-        if(isset($user_id) && isset($sale_id) && isset($payment_id) && isset($mode_of_refund) && isset($status)){
+        if(isset($user_id) && isset($client_id) && isset($amount) && isset($currency) && isset($arrears_type)&& isset($status)){
+
+          
+
+
+
 
         } else {
           // Return Error Message if user does not supply all the neccessary fields

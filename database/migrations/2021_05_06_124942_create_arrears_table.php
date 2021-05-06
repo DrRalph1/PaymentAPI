@@ -15,10 +15,12 @@ class CreateArrearsTable extends Migration
     {
         Schema::create('arrears', function (Blueprint $table) {
             $table->increments('id')->startingValue(1);
-            $table->string('client_id');
+            $table->integer('user_id');
+            $table->integer('client_id');
             $table->float('amount');
             $table->string('currency');
             $table->string('arrears_type');
+            $table->string('status');
             $table->timestamps();
         });
     }
