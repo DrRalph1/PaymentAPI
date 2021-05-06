@@ -22,10 +22,10 @@ use Illuminate\Support\Facades\Route;
 // auth => Ensures that only authenticated users get access to the RESTful API
 // cors => Ensures that user is accessing the RESTful API from a secured connection (HTTPS)
 // authIPAddress => Ensures that only whitelisted IP Addresses can access the RESTful API
-// Route::group(['middleware' => ['auth', 'cors', 'authIPAddress']], function() {
+Route::group(['middleware' => ['authIPAddress']], function() {
 
 // RESTful API Endpoint to check owed or accrued arrears of school fees or any other payment source
-Route::post('/retrieveArrears', 'ArrearsController@retrieveArrears');
+Route::post('/checkArrears', 'ArrearsController@checkArrears');
 
 // RESTful API to submit Owed or Accrued Arrears
 Route::post('/submitArrears', 'ArrearsController@submitArrears');
@@ -39,7 +39,7 @@ Route::post('/retrieveTransactionHistory', 'TransactionsController@retrieveTrans
 // RESTful API Endpoint to Refund a Sale
 Route::post('/refundSale', 'RefundsController@refundSale');
 
-// });
+ });
 
 
 

@@ -87,7 +87,7 @@ class PaymentsController extends Controller
                 ));
             
             // Return Payment Successful Message
-            return response()->json(['responseMessage' => 'The Payment Has Been Made Successfully !!','responseCode' => 100]);
+            return response()->json(['responseMessage' => 'The Payment Has Been Made Successfully !!','responseCode' => 200]);
 
           } else {
             // Return an error message if the payment was unsuccesful

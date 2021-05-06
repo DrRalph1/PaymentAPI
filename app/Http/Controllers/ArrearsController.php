@@ -95,7 +95,7 @@ class ArrearsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function retrieveArrears(Request $request)
+    public function checkArrears(Request $request)
     {
         // Request Input from user
         $input = $request->input();

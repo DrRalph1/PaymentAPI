@@ -17,7 +17,7 @@ class CreateTransactionTable extends Migration
             $table->increments('id')->startingValue(1);
             $table->integer('user_id');
             $table->integer('client_id');
-            $table->integer('payment_id');
+            $table->integer('payment_id')->nullable();;
             $table->string('transaction_type');
             $table->float('amount');
             $table->string('currency');

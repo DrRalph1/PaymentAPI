@@ -23,6 +23,5 @@ class Arrears extends Model
         'amount',
         'currency',
         'arrears_type',
-        'accrual_amount', 
     ];
 }
