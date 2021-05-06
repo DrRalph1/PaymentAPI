@@ -10,15 +10,23 @@ use Illuminate\Http\Request;
 class TransactionsController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Retrieve Transaction History
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTransactionHistories()
+    public function retrieveTransactionHistory(Request $request)
     {
+        // Request Input from user
+        $input = $request->input();
+
+        // Get API Key
+        $api_key = @$input['api_key'];
+
+        if($api_key = env('APP_KEY')){
+
         // Get All Transactions
         $data = Transaction::all();
-      
+
         // Encryption Key
         $encryption_key = env('APP_KEY');
 
@@ -32,25 +40,45 @@ class TransactionsController extends Controller
             // Return an error message if no record is found
             return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
         } else {
-            // Return All Transactions in JSON format
-            return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
+            // Return Decrypted Transactions in JSON format
+            return json_decode($decrypted);
+
+            // Return Encrypted Transactions
+            // return $encrypted;
         }
+
+      } else {
+        // Return Error Message if API KEY is wrong
+        return response()->json(['responseMessage' => 'Invalid API KEY Supplied !!','responseCode' => 100]);
+      }
+      
     }
 
    
     /**
-     * Display the specified resource.
+     * Retrive Transaction History By ID
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getTransactionHistoryByID($id)
+    public function retrieveTransactionHistoryByID(Request $request)
     {
 
+      // Request Input from user
+      $input = $request->input();
+
+      // Get API Key
+      $api_key = @$input['api_key'];
+
+      // Get Transaction ID
+      $transaction_id = @$input['transaction_id'];
+
+      if($api_key == env('APP_KEY')) {
+
       // Get Transaction by ID
-      $data = \DB::table('transactions')
+      $data = \DB::table('Transactions')
       ->select(\DB::raw("*"))
-      ->where("id", "=", $id)
+      ->where("id", "=", $transaction_id)
       ->get();
       
       // Encryption Key
@@ -66,9 +94,18 @@ class TransactionsController extends Controller
         // Return an error message if no record is found
         return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
       } else {
-        // Return All Transactions in JSON format
-        return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
+        // Return Decrypted Transactions in JSON format
+        return json_decode($decrypted);
+
+        // Return Encrypted Transactions
+        // return $encrypted;
       }
+
+    } else {
+      // Return Error Message if API KEY is wrong
+      return response()->json(['responseMessage' => 'Invalid API KEY Supplied !!','responseCode' => 100]);
     }
+
+  }
 
 }

@@ -19,10 +19,9 @@ class Refund extends Model
     protected $fillable = [
         'id',
         'user_id',
-        'client_id',
+        'sale_id',
         'payment_id',
-        'amount',
-        'currency',
         'mode_of_refund',
+        'status',
     ];
 }

@@ -17,12 +17,13 @@ class CreateTransactionTable extends Migration
             $table->increments('id')->startingValue(1);
             $table->integer('user_id');
             $table->integer('client_id');
+            $table->integer('payment_id')->nullable();
             $table->string('transaction_type');
             $table->float('amount');
             $table->string('currency');
             $table->string('mode_of_payment');
-            $table->string('paid_by');
-            $table->string('api_key');
+            $table->string('refund_id')->nullable();
+            $table->string('date_of_refund')->nullable();
             $table->string('status');
             $table->timestamps();
         });

@@ -20,12 +20,13 @@ class Transaction extends Model
         'id',
         'user_id',
         'client_id',
+        'payment_id',
         'transaction_type',
         'amount',
         'currency',
         'mode_of_payment',
-        'paid_by',
-        'api_key',
+        'refund_id',
+        'date_of_refund',
         'status',
     ];
 }

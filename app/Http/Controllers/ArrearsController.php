@@ -75,7 +75,7 @@ class ArrearsController extends Controller
         // Return an error message if no record is found
         return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
       } else {
-        // Return All Transactions in JSON format
+        // Return Accured / Owed Arrears in JSON format
         return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
       }
     }
