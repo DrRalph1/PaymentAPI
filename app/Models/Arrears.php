@@ -22,6 +22,7 @@ class Arrears extends Model
         'client_id',
         'amount',
         'currency',
-        'arrears_type', 
+        'arrears_type',
+        'accrual_amount', 
     ];
 }

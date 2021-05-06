@@ -40,7 +40,10 @@ class ArrearsController extends Controller
        $arrears_type = @$input['arrears_type'];      
        
        // Get Status of Refund
-       $status = @$input['status'];  
+       $accrual_amount = @$input['accrual_amount'];  
+
+       // Get Status of Refund
+       $status = @$input['status']; 
 
        // Authenticate the API KEY
        if ($api_key == env('APP_KEY')){
