@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 //////////////////////////////////////////////////////////////////////////////////
 
 // Enforce Extra Security on the RESTful API
-// auth => Ensures that only authenticated users get access to RESTful API
+// auth => Ensures that only authenticated users get access to the RESTful API
 // cors => Ensures that user is accessing the RESTful API from a secured connection (HTTPS)
 // authIPAddress => Ensures that only whitelisted IP Addresses can access the RESTful API
 // Route::group(['middleware' => ['auth', 'cors', 'authIPAddress']], function() {
@@ -33,32 +33,8 @@ Route::post('/receivePayments', 'PaymentsController@receivePayments');
 // RESTful API Endpoint to Retrieve All Transaction Histories
 Route::post('/retrieveTransactionHistory', 'TransactionsController@retrieveTransactionHistory');
 
-// RESTful API Endpoint to Retrieve Transaction History By ID
-Route::post('/retrieveTransactionHistoryByID', 'TransactionsController@retrieveTransactionHistoryByID');
-
 // RESTful API Endpoint to Refund a Sale
 Route::post('/refundSale', 'RefundsController@refundSale');
-
-
-////////////////////////////////////////////////////////////////////////////////////////
-////////////////// OTHER API ENDPOINTS EXPOSED BY THE PAYMENT GATEWAY //////////////////
-////////////////////////////////////////////////////////////////////////////////////////
-
-// RESTful API Endpoint to Retrieve All Payments
-Route::post('/retrievePayments', 'PaymentsController@retrievePayments');
-
-// RESTful API Endpoint to Retrieve Payment By ID
-Route::post('/retrievePaymentByID', 'PaymentsController@retrievePaymentByID');
-
-// RESTful API Endpoint to Retrieve All Refund Histories
-Route::get('/getRefunds/{api_key}', 'RefundsController@getRefunds');
-// RESTful API Endpoint to Retrieve Refund History By ID
-Route::get('/getRefundByID/{api_key}/{payment_id}', 'RefundsController@getRefundByID');
-
-// RESTful API Endpoint to Retrieve All Arrears Histories
-Route::get('/getArrears/{api_key}', 'ArrearsController@getArrears');
-// RESTful API Endpoint to Retrieve Arrears History By ID
-Route::get('/getArrearsByID/{api_key}/{arrears_id}', 'ArrearsController@getArrearsByID');
 
 // });
 

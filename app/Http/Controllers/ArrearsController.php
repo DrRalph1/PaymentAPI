@@ -9,75 +9,50 @@ use Illuminate\Http\Request;
 
 class ArrearsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getArrears()
-    {
-        // Get All Accured / Owed Arrears
-        $data = Arrears::all();
-
-        // Encryption Key
-        $encryption_key = env('APP_KEY');
-
-        // Encrypt The Data
-        $encrypted = Encryption::encrypt($data, $encryption_key);
-
-        // Decrypt The Data
-        $decrypted = Encryption::decrypt($encrypted, $encryption_key);
-
-        if (count($data) < 1) {
-            // Return an error message if no record is found
-            return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
-        } else {
-            // Return All Accured / Owed Arrears in JSON format
-            return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
-        }
-    }
-
-    /**
-     * Check owed or accrued arrears of school fees or any other payment source
+   
+  /**
+     * Refund a Sale
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function checkOwedORAccuredArrears(Request $request)
+    public function refundSale(Request $request)
     {
-        //
-    }
+       // Request Input from user
+       $input = $request->input();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function getArrearsByID($id)
-    {
-      // Get Arrears by ID
-      $data = \DB::table('arrears')
-      ->select(\DB::raw("*"))
-      ->where("id", "=", $id)
-      ->get();
-      
-      // Encryption Key
-      $encryption_key = env('APP_KEY');
+       // Get API Key
+       $api_key = @$input['api_key'];
 
-      // Encrypt The Data
-      $encrypted = Encryption::encrypt($data, $encryption_key);
+       // Get User ID
+       $user_id = @$input['user_id'];
 
-      // Decrypt The Data
-      $decrypted = Encryption::decrypt($encrypted, $encryption_key);
+       // Get Sale's ID
+       $sale_id = @$input['sale_id'];
 
-      if (count($data) < 1) {
-        // Return an error message if no record is found
-        return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
-      } else {
-        // Return Accured / Owed Arrears in JSON format
-        return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
+       // Get Payment ID
+       $payment_id = @$input['payment_id'];
+
+       // Get Mode of Refund
+       $mode_of_refund = @$input['mode_of_refund'];
+
+       // Get Status of Refund
+       $status = @$input['status'];       
+
+       // Authenticate the API KEY
+       if ($api_key == env('APP_KEY')){
+
+        // check if the user provided all the necessary information
+        if(isset($user_id) && isset($sale_id) && isset($payment_id) && isset($mode_of_refund) && isset($status)){
+
+        } else {
+          // Return Error Message if user does not supply all the neccessary fields
+          return response()->json(['responseMessage' => 'All Fields Are Required !!','responseCode' => 100]);
+        }
+
+        } else {
+        // Return Error Message if API KEY is wrong
+        return response()->json(['responseMessage' => 'Invalid API KEY Supplied !!','responseCode' => 100]);
       }
+  
     }
-
-}

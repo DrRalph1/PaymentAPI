@@ -12,34 +12,6 @@ use Illuminate\Http\Request;
 class RefundsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getRefunds()
-    {
-        // Get All Refunds
-        $data = Refund::all();
-      
-        // Encryption Key
-        $encryption_key = env('APP_KEY');
-
-        // Encrypt The Data
-        $encrypted = Encryption::encrypt($data, $encryption_key);
-
-        // Decrypt The Data
-        $decrypted = Encryption::decrypt($encrypted, $encryption_key);
-
-        if (count($data) < 1) {
-            // Return an error message if no record is found
-            return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
-        } else {
-            // Return All Refunds in JSON format
-            return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
-        }
-    }
-
-    /**
      * Refund a Sale
      *
      * @param  \Illuminate\Http\Request  $request
@@ -73,15 +45,6 @@ class RefundsController extends Controller
 
         // check if the user provided all the necessary information
         if(isset($user_id) && isset($sale_id) && isset($payment_id) && isset($mode_of_refund) && isset($status)){
-
-          $checkRefundStatus = \DB::table('payments')
-                              ->select(\DB::raw("*"))
-                              ->where("id", "=", $payment_id)
-                              ->where("status", "!=", 'Refunded')
-                              ->get();
-
-            if ($checkRefundStatus){
-
                 $refund = new Refund();
                 $refund->user_id = $user_id;
                 $refund->sale_id = $sale_id;
@@ -108,10 +71,13 @@ class RefundsController extends Controller
 
                     } else {
                       // Return an error message if the payment was unsuccesful
-                      return response()->json(['responseMessage' => 'Something went wrong. Refund was unsuccessful !!','responseCode' => 100]);
+                      return response()->json(['responseMessage' => 'This Sales Has Already Been Refunded !!','responseCode' => 100]);
                     }
 
                   } else {
+            
+                    Refund::where('payment_id', $payment_id)->delete();
+
                     // Return an error message if the payment was unsuccesful
                     return response()->json(['responseMessage' => 'Sorry, there is no transaction with the specified Payment ID !!','responseCode' => 101]);
                   }
@@ -120,11 +86,6 @@ class RefundsController extends Controller
                   // Return an error message if the payment was unsuccesful
                   return response()->json(['responseMessage' => 'Something went wrong. Refund was unsuccessful !!','responseCode' => 102]);
                 }
-
-              } else {
-                // Return Error Message if user does not supply all the neccessary fields
-                return response()->json(['responseMessage' => 'This Sales Has Already Been Refunded !!','responseCode' => 100]);
-              }
 
             } else {
               // Return Error Message if user does not supply all the neccessary fields
@@ -137,37 +98,5 @@ class RefundsController extends Controller
         }
 
       }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function getRefundByID($id)
-    {
-      // Get Refund by ID
-      $data = \DB::table('refunds')
-      ->select(\DB::raw("*"))
-      ->where("id", "=", $id)
-      ->get();
-      
-      // Encryption Key
-      $encryption_key = env('APP_KEY');
-
-      // Encrypt The Data
-      $encrypted = Encryption::encrypt($data, $encryption_key);
-
-      // Decrypt The Data
-      $decrypted = Encryption::decrypt($encrypted, $encryption_key);
-
-      if (count($data) < 1) {
-        // Return an error message if no record is found
-        return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
-      } else {
-        // Return  Refund Info in JSON format
-        return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
-      }
-    }
 
 }
