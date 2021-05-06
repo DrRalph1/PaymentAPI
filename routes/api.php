@@ -30,12 +30,38 @@ Route::get('/checkOwedORAccuredArrears', 'ArrearsController@checkOwedORAccuredAr
 // RESTful API Endpoint to Receive Payment from clients (Students or the general public)
 Route::post('/receivePayments', 'PaymentsController@receivePayments');
 
-// RESTful API Endpoint to Retrieve Transaction History
-Route::get('/retrieveTransactionHistory', 'TransactionsController@index');
+// RESTful API Endpoint to Retrieve All Transaction Histories
+Route::get('/getTransactionHistories', 'TransactionsController@getTransactionHistories');
+
+// RESTful API Endpoint to Retrieve Transaction History By ID
+Route::get('/getTransactionHistoryByID/{id}', 'TransactionsController@getTransactionHistoryByID');
 
 // RESTful API Endpoint to Refund a Sale
 Route::post('/refundSale', 'RefundsController@refundSale');
 
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////// OTHER API ENDPOINTS EXPOSED BY THE PAYMENT GATEWAY //////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+// RESTful API Endpoint to Retrieve All Payment Histories
+Route::get('/getPayments', 'PaymentsController@getPayments');
+// RESTful API Endpoint to Retrieve Payment By ID
+Route::get('/getPaymentByID/{payment_id}', 'PaymentsController@getPaymentByID');
+
+// RESTful API Endpoint to Retrieve All Refund Histories
+Route::get('/getRefunds', 'RefundsController@getRefunds');
+// RESTful API Endpoint to Retrieve Refund History By ID
+Route::get('/getRefundByID/{payment_id}', 'RefundsController@getRefundByID');
+
+// RESTful API Endpoint to Retrieve All Arrears Histories
+Route::get('/getArrears', 'ArrearsController@getArrears');
+// RESTful API Endpoint to Retrieve Arrears History By ID
+Route::get('/getArrearsByID/{arrears_id}', 'ArrearsController@getArrearsByID');
+
 // });
+
+
+
 
 

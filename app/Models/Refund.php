@@ -9,6 +9,8 @@ class Refund extends Model
 {
     use HasFactory;
 
+    protected $table = "refunds";
+
      /**
      * The attributes that are mass assignable.
      *

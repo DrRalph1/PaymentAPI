@@ -9,6 +9,8 @@ class Arrears extends Model
 {
     use HasFactory;
 
+    protected $table = "arrears";
+
      /**
      * The attributes that are mass assignable.
      *
