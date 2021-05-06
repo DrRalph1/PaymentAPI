@@ -10,7 +10,4 @@
 
 <hr>
 NB: <h3>This RESTful API was proudly developed by <b>Ernest Glate</b> for Coventry University</h3>
-
-<br>
-This be just something we dey add..
 <hr>
