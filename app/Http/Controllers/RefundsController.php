@@ -66,11 +66,11 @@ class RefundsController extends Controller
 
                     if ($updatePayment){
 
-                    // Return Payment Successful Message
+                    // Return Successful Message
                     return response()->json(['responseMessage' => 'The Refund Has Been Made Successfully !!','responseCode' => 200]);
 
                     } else {
-                      // Return an error message if the payment was unsuccesful
+                      // Return an error message if unsuccesful
                       return response()->json(['responseMessage' => 'This Sales Has Already Been Refunded !!','responseCode' => 100]);
                     }
 
@@ -78,12 +78,12 @@ class RefundsController extends Controller
             
                     Refund::where('payment_id', $payment_id)->delete();
 
-                    // Return an error message if the payment was unsuccesful
+                    // Return an error message if unsuccesful
                     return response()->json(['responseMessage' => 'Sorry, there is no transaction with the specified Payment ID !!','responseCode' => 101]);
                   }
 
                 } else {
-                  // Return an error message if the payment was unsuccesful
+                  // Return an error message if unsuccesful
                   return response()->json(['responseMessage' => 'Something went wrong. Refund was unsuccessful !!','responseCode' => 102]);
                 }
 

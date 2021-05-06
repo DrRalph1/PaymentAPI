@@ -59,7 +59,6 @@ class PaymentsController extends Controller
         // check if user entered numeric value(s) ONLY for the amount
         if((preg_match('/^-?(?:\d+|\d*\.\d+)$/', $amount))){
 
-
           $transaction = new Transaction();
           $transaction->user_id = $user_id;
           $transaction->client_id = $client_id;

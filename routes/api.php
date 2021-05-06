@@ -25,7 +25,10 @@ use Illuminate\Support\Facades\Route;
 // Route::group(['middleware' => ['auth', 'cors', 'authIPAddress']], function() {
 
 // RESTful API Endpoint to check owed or accrued arrears of school fees or any other payment source
-Route::get('/checkOwedORAccuredArrears', 'ArrearsController@checkOwedORAccuredArrears');
+Route::post('/retrieveArrears', 'ArrearsController@retrieveArrears');
+
+// RESTful API to submit Owed or Accrued Arrears
+Route::post('/submitArrears', 'ArrearsController@submitArrears');
 
 // RESTful API Endpoint to Receive Payment from clients (Students or the general public)
 Route::post('/receivePayments', 'PaymentsController@receivePayments');

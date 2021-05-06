@@ -20,7 +20,6 @@ class CreateArrearsTable extends Migration
             $table->float('amount');
             $table->string('currency');
             $table->string('arrears_type');
-            $table->string('status');
             $table->timestamps();
         });
     }

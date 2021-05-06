@@ -16,7 +16,7 @@ class ArrearsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function refundSale(Request $request)
+    public function submitArrears(Request $request)
     {
        // Request Input from user
        $input = $request->input();
@@ -46,11 +46,32 @@ class ArrearsController extends Controller
        if ($api_key == env('APP_KEY')){
 
         // check if the user provided all the necessary information
-        if(isset($user_id) && isset($client_id) && isset($amount) && isset($currency) && isset($arrears_type)&& isset($status)){
+        if(isset($user_id) && isset($client_id) && isset($amount) && isset($currency) && isset($arrears_type)){
 
-          
+          // check if user entered numeric value(s) ONLY for the amount
+          if((preg_match('/^-?(?:\d+|\d*\.\d+)$/', $amount))){
+        
+          $arrears = new arrears();
+          $arrears->user_id = $user_id;
+          $arrears->client_id = $client_id;
+          $arrears->amount = $amount;
+          $arrears->currency = $currency;
+          $arrears->arrears_type = $arrears_type;
 
+          if ($arrears->save()){
 
+             // Return Successful Message
+             return response()->json(['responseMessage' => 'Arrears has been added successfully !!','responseCode' => 100]);
+
+          } else {
+            // Return an error message if unsuccesful
+            return response()->json(['responseMessage' => 'Something went wrong. Arrears was not added !!','responseCode' => 100]);
+          }
+
+        } else {
+          // Return Error Message if user does not enter a number for the amount
+          return response()->json(['responseMessage' => 'Invalid Input for Amount Field. Amount can only be a number !!','responseCode' => 100]);
+        }
 
 
         } else {
@@ -64,3 +85,51 @@ class ArrearsController extends Controller
       }
   
     }
+
+
+    /**
+     * Retrieve Transaction History
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function retrieveArrears(Request $request)
+    {
+        // Request Input from user
+        $input = $request->input();
+
+        // Get API Key
+        $api_key = @$input['api_key'];
+
+        if($api_key = env('APP_KEY')){
+
+        // Get All Transactions
+        $data = Arrears::all();
+
+        // Encryption Key
+        $encryption_key = env('APP_KEY');
+
+        // Encrypt The Data
+        $encrypted = Encryption::encrypt($data, $encryption_key);
+
+        // Decrypt The Data
+        $decrypted = Encryption::decrypt($encrypted, $encryption_key);
+
+        if (count($data) < 1) {
+            // Return an error message if no record is found
+            return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
+        } else {
+            // Return Decrypted Arrears Info in JSON format
+            return json_decode($decrypted);
+
+            // Return Encrypted Arrears Info
+            // return $encrypted;
+        }
+
+      } else {
+        // Return Error Message if API KEY is wrong
+        return response()->json(['responseMessage' => 'Invalid API KEY Supplied !!','responseCode' => 100]);
+      }
+      
+    }
+
+  }
