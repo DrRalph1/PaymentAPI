@@ -10,5 +10,5 @@
 
 <br>
 <hr>
-NB: <h3>This REST API was proudly developed by <b>Ernest</b> for Coventry University</h3>
+NB: <h3>This RESTful API was proudly developed by <b>Ernest Glate</b> for Coventry University</h3>
 <hr>
