@@ -18,12 +18,23 @@ class RefundsControler extends Controller
         // Get All Refunds
         $Refunds = Refund::all();
 
+        $data = $Refunds;
+      
+        // Encryption Key
+        $encryption_key = 'base64:paYulEG55oLLh6f5Mr2/F0UunKXjF9qDO4YVwNOq9Bc=';
+
+        // Encrypt The Data
+        $encrypted = Encryption::encrypt($data, $encryption_key);
+
+        // Decrypt The Data
+        $decrypted = Encryption::decrypt($encrypted, $encryption_key);
+
         if (count($Refunds) < 1) {
             // Return an error message if no record is found
             return response()->json(['responseMessage' => 'No record was found !!','responseCode' => 100]);
         } else {
             // Return All Refunds in JSON format
-            return response()->json(['responseMessage' => $Refunds,'responseCode' => 200]);
+            return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
         }
     }
 
@@ -49,8 +60,19 @@ class RefundsControler extends Controller
       // Get Refund by ID
       $Refund = Refund::findOrFail($id);
 
+      $data = $Refunds;
+      
+      // Encryption Key
+      $encryption_key = 'base64:paYulEG55oLLh6f5Mr2/F0UunKXjF9qDO4YVwNOq9Bc=';
+
+      // Encrypt The Data
+      $encrypted = Encryption::encrypt($data, $encryption_key);
+
+      // Decrypt The Data
+      $decrypted = Encryption::decrypt($encrypted, $encryption_key);
+
       // Return Refund in json format
-      return response()->json(['responseMessage' => $Refund,'responseCode' => 200]);
+      return response()->json(['responseMessage' => $decrypted,'responseCode' => 200]);
     }
 
 }
